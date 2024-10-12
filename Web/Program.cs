@@ -1,3 +1,5 @@
+using Application.Interfaces;
+using Application.Services;
 using Domain.Interfaces;
 using Infrastructure.Data;
 using Microsoft.Data.Sqlite;
@@ -18,6 +20,8 @@ connection.Open();
 
 builder.Services.AddDbContext<ApplicationContext>(dbContextOptions =>
     dbContextOptions.UseSqlite(connection, b => b.MigrationsAssembly("Infrastructure")));
+
+builder.Services.AddScoped<IProductService, ProductService>();
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();

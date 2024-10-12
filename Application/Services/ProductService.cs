@@ -38,6 +38,8 @@ namespace Application.Services
                 ImageUrl = dto.ImageUrl,
                 Size = dto.Size,
             };
+
+            _repository.Add(product);
         }
 
         public void Delete(int id)
