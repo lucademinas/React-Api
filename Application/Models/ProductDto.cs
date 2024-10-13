@@ -13,7 +13,6 @@ namespace Application.Models
         public string Description { get; set; }
         [Required]
         public decimal Price { get; set; }
-        [Required]
         public string ImageUrl { get; set; }
         [Required]
         public string Size { get; set; }
