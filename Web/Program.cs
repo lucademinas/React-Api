@@ -22,6 +22,7 @@ builder.Services.AddDbContext<ApplicationContext>(dbContextOptions =>
     dbContextOptions.UseSqlite(connection, b => b.MigrationsAssembly("Infrastructure")));
 
 builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<IOrderService, OrderService>();
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
