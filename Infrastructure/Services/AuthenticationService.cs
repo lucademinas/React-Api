@@ -1,16 +1,13 @@
-﻿using Application.Interfaces;
+﻿using Application.Models.Requests;
+using Application.Interfaces;
 using Domain.Entities;
 using Domain.Interfaces;
 using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Infrastructure.Services
 {
