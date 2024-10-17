@@ -2,7 +2,6 @@
 using Application.Interfaces;
 using Domain.Entities;
 using Domain.Interfaces;
-using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
