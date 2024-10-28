@@ -41,15 +41,12 @@ namespace Application.Services
             _repository.Add(user);
         }
 
-        public void Update(UserDto dto, int id)
+        public void Update(UserUpdateDTO dto, int id)
         {
             var userUpdate = _repository.Get(id);
             if (userUpdate != null)
             {
                 userUpdate.Name = dto.Name;
-                userUpdate.Email = dto.Email;
-                userUpdate.Password = dto.Password;
-                userUpdate.UserRol = dto.UserRol;
 
                 _repository.Update(userUpdate);
             }

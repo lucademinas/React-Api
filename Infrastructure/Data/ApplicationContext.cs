@@ -19,5 +19,29 @@ namespace Infrastructure.Data
         {
 
         }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<User>().HasData(CreateSysAdminDataSeed());
+
+            base.OnModelCreating(modelBuilder);
+        }
+
+        private User[] CreateSysAdminDataSeed()
+        {
+            return new User[]
+            {
+                new User
+                {
+                    Id = -1,
+                    Name = "Sysadmin",
+                    Email = "sys@admin.com",
+                    Password = "123",
+                    StartDate = new DateTime(2024/9/21),
+                    UserRol = "Sysadmin"
+
+                }
+            };
+        }
     }
 }

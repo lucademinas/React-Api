@@ -67,7 +67,13 @@ builder.Services.AddAuthentication("Bearer") //"Bearer" es el tipo de auntentica
             ValidAudience = builder.Configuration["AuthenticationService:Audience"],
              IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(builder.Configuration["AuthenticationService:SecretForKey"]))
         };
-    });    
+    });
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("SysAdmin", policy => policy.RequireClaim("UserRol", "Sysadmin"));
+
+});
 
 #region Services
 
