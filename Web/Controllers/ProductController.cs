@@ -8,7 +8,6 @@ namespace Web.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
     public class ProductController : ControllerBase
     {
         private readonly IProductService _productService;
@@ -35,6 +34,7 @@ namespace Web.Controllers
             return Ok(product);
         }
 
+        [Authorize]
         [HttpPost]
         public IActionResult CreateProduct([FromBody] ProductDto productDto)
         {
@@ -42,6 +42,7 @@ namespace Web.Controllers
             return Ok("El producto fue agregado correctamente");
         }
 
+        [Authorize]
         [HttpPut("Update/{id}")]
         public IActionResult UpdateProduct(int id, [FromBody] ProductDto productDto)
         {
@@ -49,6 +50,7 @@ namespace Web.Controllers
             return Ok("El producto fue actualizado correctamente");
         }
 
+        [Authorize]
         [HttpDelete]
         public IActionResult DeleteProduct(int id)
         {

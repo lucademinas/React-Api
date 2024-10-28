@@ -17,7 +17,7 @@ namespace Web.Controllers
             _userService = userService;
         }
 
-        [Authorize]
+        [Authorize(Policy = "SysAdmin")]
         [HttpGet]
         public IActionResult Get()
         {
@@ -31,7 +31,7 @@ namespace Web.Controllers
             var user = _userService.Get(id);
             if (user == null)
             {
-                return NotFound();
+                return NotFound($"No se encontró al usuario con ID: {id}");
             }
             return Ok(user);
         }
@@ -56,21 +56,20 @@ namespace Web.Controllers
         
 
         [Authorize]
-        [HttpPut]
-        public IActionResult UpdateUser([FromBody] UserDto user, int id)
+        [HttpPut("{id}")]
+        public IActionResult UpdateUser([FromBody] UserUpdateDTO user, [FromRoute]int id)
         {
             _userService.Update(user, id);
             return Ok("El usuario fue actualizado correctamente");
         }
 
-        [Authorize]
-        [HttpDelete]
-        public IActionResult DeleteUser(int id)
+        [HttpDelete("{id}")]
+        public IActionResult DeleteUser([FromRoute]int id)
         {
             var user = _userService.Get(id);
             if (user == null)
             {
-                return NotFound();
+                return NotFound($"No se encontró al usuario con ID: {id}");
             }
             _userService.Delete(id);
             return Ok("El usuario fue eliminado correctamente");

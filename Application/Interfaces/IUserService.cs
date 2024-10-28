@@ -13,7 +13,7 @@ namespace Application.Interfaces
         List<User> Get();
         User? Get(int id);
         void Add(UserDto dto);
-        void Update(UserDto dto, int id);
+        void Update(UserUpdateDTO dto, int id);
         void Delete(int id);
     }
 }
