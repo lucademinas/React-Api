@@ -10,9 +10,6 @@ namespace Application.Models
     public class OrderDto
     {
         [Required]
-        public int UserId { get; set; }
-        public DateTime OrderDate { get; set; } = DateTime.Now;
-        public decimal Total;
-
+        public int ClientId { get; set; }
     }
 }

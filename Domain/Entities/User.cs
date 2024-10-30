@@ -17,7 +17,6 @@ namespace Domain.Entities
         public string Email { get; set; }
         public string Password { get; set; }
         public DateTime StartDate { get; set; } = DateTime.Today;
-        public string UserRol {  get; set; }
-
+        public string UserRol {  get; set; }       
     }
 }

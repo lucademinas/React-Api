@@ -1,4 +1,5 @@
 ﻿using Application.Models;
+using Application.Models.Responses;
 using Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -10,11 +11,12 @@ namespace Application.Interfaces
 {
     public interface IProductService
     {
-        List<Product> Get();
+        List<ProductResponseDTO> Get();
         Product? Get(int id);
-        void Add(ProductDto dto);
+        void Add(int adminId, ProductDto dto);
         void Delete(int id);
         void Update(int id, ProductDto dto);
+        List<ProductResponseDTO> GetAllByAdmin(int adminId);
 
     }
 }

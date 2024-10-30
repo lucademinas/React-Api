@@ -8,12 +8,14 @@ using System.Threading.Tasks;
 
 namespace Application.Interfaces
 {
-    public interface IUserService
+    public interface IClientService
     {
-        List<User> Get();
-        User? Get(int id);
+        List<Client> Get();
+        Client? Get(int id);
         void Add(UserCreateDTO dto);
-        void Update(UserUpdateDTO dto, int id);
+        void Update(int id, UserUpdateDTO dto);
         void Delete(int id);
     }
+        
+       
 }

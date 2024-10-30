@@ -6,27 +6,27 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Web.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
-    public class UserController : ControllerBase
+    [Authorize(Policy = "SysAdmin")]
+    public class SysController : ControllerBase
     {
         private readonly IUserService _userService;
 
-        public UserController(IUserService userService)
+        public SysController(IUserService userService)
         {
             _userService = userService;
         }
 
-        [Authorize(Policy = "SysAdmin")]
+      
         [HttpGet]
-        public IActionResult Get()
+        public IActionResult GetAllUsers()
         {
             return Ok(_userService.Get());
         }
 
-        [Authorize]
         [HttpGet("{id}")]
-        public IActionResult Get(int id)
+        public IActionResult GetUserById(int id)
         {
             var user = _userService.Get(id);
             if (user == null)
@@ -36,26 +36,6 @@ namespace Web.Controllers
             return Ok(user);
         }
 
-        [HttpPost]
-        public IActionResult CreateUser([FromBody] UserDto user)
-        {
-            try
-            {
-                // Aquí llamas a tu servicio para agregar el usuario
-                _userService.Add(user);
-
-                // Retornar respuesta de éxito
-                return Ok(new { message = "El usuario fue agregado correctamente" });
-            }
-            catch (Exception ex)
-            {
-                // Manejar el error (opcionalmente loguear)
-                return BadRequest(new { message = "Error al agregar el usuario: " + ex.Message });
-            }
-        }
-        
-
-        [Authorize]
         [HttpPut("{id}")]
         public IActionResult UpdateUser([FromBody] UserUpdateDTO user, [FromRoute]int id)
         {
