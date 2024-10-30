@@ -10,53 +10,56 @@ using System.Threading.Tasks;
 
 namespace Application.Services
 {
-    public class UserService : IUserService
+    public class AdminService : IAdminService
     {
-        private readonly IUserRepository _repository;
+        private readonly IAdminRepository _repository;
 
-        public UserService(IUserRepository repository)
+        public AdminService(IAdminRepository repository)
         {
             _repository = repository;
-        } 
+        }
 
-        public List<User> Get()
+        public List<Admin> Get()
         {
             return _repository.GetAll();
         }
 
-        public User? Get(int id)
+        public Admin? Get(int id)
         {
             return _repository.Get(id);
         }
 
         public void Add(UserCreateDTO dto)
         {
-            var user = new User
+            var admin = new Admin()
             {
                 Name = dto.Name,
                 Email = dto.Email,
                 Password = dto.Password,
+                UserRol = "Admin"
             };
-            _repository.Add(user);
+
+            _repository.Add(admin);
         }
 
-        public void Update(UserUpdateDTO dto, int id)
+        public void Update(int id, UserUpdateDTO dto)
         {
-            var userUpdate = _repository.Get(id);
-            if (userUpdate != null)
+            var admin = _repository.Get(id);
+            if (admin != null)
             {
-                userUpdate.Name = dto.Name;
+                admin.Name = dto.Name;
+                admin.Email = dto.Email;
 
-                _repository.Update(userUpdate);
+                _repository.Update(admin);
             }
         }
 
         public void Delete(int id)
         {
-            var userDelete = _repository.Get(id);
-            if (userDelete != null)
+            var admin = _repository.Get(id);
+            if (admin != null)
             {
-                _repository.Delete(userDelete);
+                _repository.Delete(admin);
             }
         }
     }

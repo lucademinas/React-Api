@@ -1,5 +1,6 @@
 ﻿using Application.Interfaces;
 using Application.Models;
+using Application.Models.Responses;
 using Domain.Entities;
 using Domain.Interfaces;
 using System;
@@ -12,24 +13,58 @@ namespace Application.Services
 {
     public class ProductService : IProductService
     {
-        private readonly IProductRepository _repository;
+        private readonly IProductRepository _productRepository;
+        private readonly IAdminRepository _adminRepository;
 
-        public ProductService(IProductRepository repository)
+        public ProductService(IProductRepository repository, IAdminRepository adminRepository)
         {
-            _repository = repository;
+            _productRepository = repository;
+            _adminRepository = adminRepository;
         }
 
-        public List<Product> Get()
+        public List<ProductResponseDTO> Get()
         {
-            return _repository.GetAll();
+            var products = _productRepository.GetAll();
+            return products.Select(s => new ProductResponseDTO
+            {
+                Id = s.Id,
+                Description = s.Description,
+                Price = s.Price,
+                ImageUrl = s.ImageUrl,
+                Admin = new AdminResponseDTO
+                {
+                    Id = s.Admin.Id,
+                    Name = s.Admin.Name,
+                    Email = s.Admin.Email,
+                }
+            }).ToList();
         }
 
         public Product? Get(int id)
         {
-            return _repository.Get(id);
+            return _productRepository.Get(id);
         }
 
-        public void Add(ProductDto dto)
+        public List<ProductResponseDTO> GetAllByAdmin(int adminId)
+        {
+            var products = _productRepository.GetAllByAdmin(adminId);
+
+            return products.Select(s => new ProductResponseDTO
+            {
+                Id = s.Id,
+                Description = s.Description,
+                Price = s.Price,
+                ImageUrl = s.ImageUrl,
+                Admin = new AdminResponseDTO
+                {
+                    Id = s.Admin.Id,
+                    Name = s.Admin.Name,
+                    Email = s.Admin.Email,
+                }               
+            }).ToList();
+        }
+
+        public void Add(int adminId, ProductDto dto)
         {
             var product = new Product
             {
@@ -37,24 +72,25 @@ namespace Application.Services
                 Price = dto.Price,
                 ImageUrl = dto.ImageUrl,
                 Size = dto.Size,
+                AdminId = adminId,
             };
 
-            _repository.Add(product);
+            _productRepository.Add(product);
         }
 
         public void Delete(int id)
         {
-            var productDelete = _repository.Get(id);
+            var productDelete = _productRepository.Get(id);
             if (productDelete != null)
             {
-                _repository.Delete(productDelete);
+                _productRepository.Delete(productDelete);
             }
 
         }
 
         public void Update (int id, ProductDto dto)
         {
-            var product = _repository.Get(id);
+            var product = _productRepository.Get(id);
             if(product != null)
             {
                 product.Description = dto.Description;
@@ -62,7 +98,7 @@ namespace Application.Services
                 product.ImageUrl = dto.ImageUrl;
                 product.Size = dto.Size;
 
-                _repository.Update(product);
+                _productRepository.Update(product);
             }
         }
     }

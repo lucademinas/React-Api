@@ -72,12 +72,15 @@ builder.Services.AddAuthentication("Bearer") //"Bearer" es el tipo de auntentica
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("SysAdmin", policy => policy.RequireClaim("UserRol", "Sysadmin"));
+    options.AddPolicy("Admin", policy => policy.RequireClaim("UserRol", "Admin"));
 
 });
 
 #region Services
 
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IClientService, ClientService>();
+builder.Services.AddScoped<IAdminService, AdminService>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<ICustomAuthenticationService, AuthenticationService>();
@@ -88,6 +91,9 @@ builder.Services.Configure<AuthenticationServiceOptions>(
 #endregion
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IClientRepository, ClientRepository>();
+builder.Services.AddScoped<IAdminRepository, AdminRepository>();
+builder.Services.AddScoped<ISysAdminRepository, SysAdminRepository>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<IOrderDetailRepository, OrderDetailRepository>();

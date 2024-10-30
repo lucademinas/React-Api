@@ -7,8 +7,7 @@ using System.Threading.Tasks;
 
 namespace Domain.Interfaces
 {
-    public interface IProductRepository : IBaseRepository<Product>
+    public interface IAdminRepository : IBaseRepository<Admin>
     {
-        List<Product> GetAllByAdmin(int adminId);
     }
 }

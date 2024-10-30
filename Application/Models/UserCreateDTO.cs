@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Application.Models
 {
-    public class UserDto
+    public class UserCreateDTO
     {
         [Required]
         public string Name { get; set; }
@@ -15,8 +15,5 @@ namespace Application.Models
         public string Email { get; set; }
         [Required]
         public string Password { get; set; }
-        [Required]
-        public string UserRol {  get; set; }
- 
     }
 }

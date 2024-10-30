@@ -13,12 +13,12 @@ namespace Application.Services
     public class OrderService : IOrderService
     {
         private readonly IOrderRepository _orderRepository;
-        private readonly IUserRepository _userRepository;
+        private readonly IClientRepository _clientRepository;
 
-        public OrderService(IOrderRepository orderRepository, IUserRepository userRepository)
+        public OrderService(IOrderRepository orderRepository, IClientRepository clientRepository)
         {
             _orderRepository = orderRepository;
-            _userRepository = userRepository;
+            _clientRepository = clientRepository;
         }
 
         public List<Order> Get()
@@ -33,17 +33,15 @@ namespace Application.Services
 
         public void Add(OrderDto dto)
         {
-            var user = _userRepository.Get(dto.UserId);
-            if (user == null)
+            var client = _clientRepository.Get(dto.ClientId);
+            if (client == null)
             {
                 throw new Exception("Usuario no encontrado");
             }
 
-            var order = new Order
+            var order = new Order()
             {
-                User = user,
-                OrderDate = dto.OrderDate,
-                Total = dto.Total
+                ClientId = dto.ClientId,
             };
 
             _orderRepository.Add(order);

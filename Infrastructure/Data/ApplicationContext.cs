@@ -22,16 +22,32 @@ namespace Infrastructure.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<User>().HasData(CreateSysAdminDataSeed());
+            modelBuilder.Entity<SysAdmin>().HasData(CreateSysAdminDataSeed());
+
+            modelBuilder.Entity<Client>()
+                .HasMany(o => o.Orders)
+                .WithOne(c => c.Client);
+
+            modelBuilder.Entity<Admin>()
+                .HasMany(p => p.Products)
+                .WithOne(a => a.Admin);
+
+            modelBuilder.Entity<Order>()
+                .HasMany(d => d.OrderDetails)
+                .WithOne(o => o.Order);
+
+            modelBuilder.Entity<OrderDetail>()
+                .HasOne(p => p.Product)
+                .WithMany();
 
             base.OnModelCreating(modelBuilder);
         }
 
         private User[] CreateSysAdminDataSeed()
         {
-            return new User[]
+            return new SysAdmin[]
             {
-                new User
+                new SysAdmin
                 {
                     Id = -1,
                     Name = "Sysadmin",
