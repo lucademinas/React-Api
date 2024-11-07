@@ -36,5 +36,16 @@ namespace Infrastructure.Data
                 .FirstOrDefault(x => x.Id == id);
 
         }
+
+        public List<Order> GetOrdersByAdmin(int adminId)
+        {
+            return _context.Orders
+                .Include(o => o.Client) // Asegúrate de incluir también el Client
+                .Include(o => o.OrderDetails)
+                    .ThenInclude(od => od.Product)
+                .Where(o => o.OrderDetails.Any(od => od.Product.AdminId == adminId))
+                .ToList();
+        }
+
     }
 }
