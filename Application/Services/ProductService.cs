@@ -31,6 +31,7 @@ namespace Application.Services
                 Description = s.Description,
                 Price = s.Price,
                 ImageUrl = s.ImageUrl,
+                Size = s.Size,
                 Admin = new AdminResponseDTO
                 {
                     Id = s.Admin.Id,
@@ -55,12 +56,13 @@ namespace Application.Services
                 Description = s.Description,
                 Price = s.Price,
                 ImageUrl = s.ImageUrl,
+                Size = s.Size,
                 Admin = new AdminResponseDTO
                 {
                     Id = s.Admin.Id,
                     Name = s.Admin.Name,
                     Email = s.Admin.Email,
-                }               
+                }
             }).ToList();
         }
 
