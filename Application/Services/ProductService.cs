@@ -73,6 +73,8 @@ namespace Application.Services
                 ImageUrl = dto.ImageUrl,
                 Size = dto.Size,
                 AdminId = adminId,
+                Stock = dto.Stock,
+                Brand = dto.Brand,
             };
 
             _productRepository.Add(product);
@@ -97,7 +99,8 @@ namespace Application.Services
                 product.Price = dto.Price;
                 product.ImageUrl = dto.ImageUrl;
                 product.Size = dto.Size;
-
+                product.Stock = dto.Stock;
+                product.Brand = dto.Brand;
                 _productRepository.Update(product);
             }
         }

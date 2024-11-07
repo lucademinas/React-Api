@@ -16,5 +16,9 @@ namespace Application.Models
         public string ImageUrl { get; set; }
         [Required]
         public string Size { get; set; }
+        [Required]
+        public int Stock {  get; set; }
+        [Required]
+        public string Brand { get; set; }
     }
 }

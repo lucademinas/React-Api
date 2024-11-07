@@ -17,6 +17,8 @@ namespace Domain.Entities
         public decimal Price { get; set; }
         public string ImageUrl { get; set; }
         public string Size { get; set; } 
+        public int Stock { get; set; }
+        public string Brand { get; set; }
         public int AdminId { get; set; }
         public Admin Admin { get; set; }
     }
