@@ -73,6 +73,7 @@ builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("SysAdmin", policy => policy.RequireClaim("UserRol", "Sysadmin"));
     options.AddPolicy("Admin", policy => policy.RequireClaim("UserRol", "Admin"));
+    options.AddPolicy("Client", policy => policy.RequireClaim("UserRol", "Client"));
 
 });
 
@@ -83,6 +84,7 @@ builder.Services.AddScoped<IClientService, ClientService>();
 builder.Services.AddScoped<IAdminService, AdminService>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddScoped<IOrderDetailService, OrderDetailService>();
 builder.Services.AddScoped<ICustomAuthenticationService, AuthenticationService>();
 builder.Services.Configure<AuthenticationServiceOptions>(
     builder.Configuration.GetSection(AuthenticationServiceOptions.AuthenticationService));

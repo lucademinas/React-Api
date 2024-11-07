@@ -1,4 +1,5 @@
 ﻿using Application.Models;
+using Application.Models.Responses;
 using Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -10,9 +11,9 @@ namespace Application.Interfaces
 {
     public interface IOrderService
     {
-        List<Order> Get();
-        Order? Get(int id);
-        void Add(OrderDto dto);
+        List<OrderResponseDTO> GetAllByClient(int clientId);
+        OrderResponseDTO? Get(int id);
+        void Add(OrderDto createSaleOrder);
         void Delete(int id);
     }
 }
