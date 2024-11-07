@@ -11,5 +11,6 @@ namespace Domain.Interfaces
     {
         public List<Order> GetAllByClient(int clientId);
         public Order? Get(int id);
+        List<Order> GetOrdersByAdmin(int adminId);
     }
 }

@@ -101,6 +101,41 @@ namespace Application.Services
             }
         }
 
+        public List<AdminOrderSummaryDTO> GetOrdersByAdmin(int adminId)
+        {
+            // Obtiene todos los pedidos que incluyen productos de este administrador
+            var orders = _repository.GetOrdersByAdmin(adminId);
+
+            // Mapea las órdenes a AdminOrderSummaryDTO
+            var result = orders.Select(order => new AdminOrderSummaryDTO
+            {
+                OrderId = order.Id,
+                OrderDate = order.OrderDate,
+                Total = order.Total,
+                Client = new ClientResponseDTO
+                {
+                    Id = order.Client.Id,
+                    Name = order.Client.Name,
+                    Email = order.Client.Email
+                },
+                // Filtra y mapea los productos asociados a este administrador
+                Products = order.OrderDetails
+                    .Where(d => d.Product.AdminId == adminId)  // Filtra solo los productos del administrador
+                    .Select(d => new ProductOrderSummaryDTO
+                    {
+                        ProductId = d.Product.Id,
+                        Description = d.Product.Description,
+                        Quantity = d.Quantity,
+                        TotalPrice = d.Quantity * d.Product.Price
+                    })
+                    .ToList()
+            }).ToList();
+
+            return result;
+        }
+
+
+
 
     }
 }

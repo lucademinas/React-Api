@@ -105,6 +105,21 @@ namespace TPI_Ecommerce.Controllers
             _orderService.Delete(id);
             return Ok($"Venta con ID: {id} eliminada");           
         }
+
+        [Authorize(Policy = "Admin")]
+        [HttpGet("{adminId}")]
+        public IActionResult GetOrdersByAdmin([FromRoute] int adminId)
+        {
+            // Verifica que el usuario que hace la solicitud sea el administrador que se está buscando o un superadministrador
+
+            var orders = _orderService.GetOrdersByAdmin(adminId);
+            if (orders == null || orders.Count == 0)
+            {
+                return NotFound($"No se encontraron órdenes asociadas al administrador con ID: {adminId}");
+            }
+
+            return Ok(orders);
+        }
     }
 }
 
