@@ -9,5 +9,8 @@ namespace Domain.Interfaces
 {
     public interface IOrderDetailRepository : IBaseRepository<OrderDetail>
     {
+        List<OrderDetail> GetAllBySaleOrder(int saleOrderId);
+        List<OrderDetail> GetAllByProduct(int productId);
+        OrderDetail? Get(int id);
     }
 }

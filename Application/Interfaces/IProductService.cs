@@ -16,6 +16,7 @@ namespace Application.Interfaces
         void Add(int adminId, ProductDto dto);
         void Delete(int id);
         void Update(int id, ProductDto dto);
+        void UpdateStock(int id, ProductUpdateDto dto);
         List<ProductResponseDTO> GetAllByAdmin(int adminId);
 
     }

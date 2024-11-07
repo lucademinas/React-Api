@@ -1,52 +1,110 @@
 ﻿using Application.Interfaces;
 using Application.Models;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
-namespace Web.Controllers
+namespace TPI_Ecommerce.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
-    [Authorize]
     public class OrderController : ControllerBase
     {
         private readonly IOrderService _orderService;
+        private readonly IClientService _clientService;
 
-        public OrderController(IOrderService orderService)
+        public OrderController(IOrderService saleOrderService, IClientService clientService)
         {
-            _orderService = orderService;
+            _orderService = saleOrderService;
+            _clientService = clientService;
         }
 
-        [HttpGet]
-        public IActionResult Get()
+        private int? GetUserId() //Funcion para obtener el userId de las claims del usuario autenticado en el contexto de la solicitud actual.
         {
-            return Ok(_orderService.Get());
+            var userIdClaim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
+            if (userIdClaim != null && int.TryParse(userIdClaim.Value, out var userId))
+            {
+                return userId;
+            }
+            return null;
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetOrderById(int id)
+        public IActionResult GetById([FromRoute] int id)
         {
-            var order = _orderService.Get(id);
-            if (order == null)
+            
+              var saleOrder = _orderService.Get(id);
+              if (saleOrder is null)
+              {
+                    return NotFound($"No se encontró la venta con ID: {id}");
+              }
+              return Ok(saleOrder);
+            
+        }
+
+        [HttpGet("{clientId}")]
+        public IActionResult GetAllByClient([FromRoute] int clientId)
+        {
+            var userId = GetUserId();
+            if (userId == null)
             {
-                return NotFound();
+                return Forbid();
             }
-            return Ok(order);
+
+            var client = _clientService.Get(clientId);
+            if (client is null)
+            {
+                return NotFound($"No se encontró al cliente con ID: {clientId}");
+            }
+
+            var saleOrders = _orderService.GetAllByClient(clientId);
+
+            if (saleOrders.Count == 0)
+            {
+               return BadRequest($"El cliente con ID: {clientId} todavía no hizo ninguna compra");
+
+            }
+            return Ok(saleOrders);
+            
         }
 
+        [Authorize(Policy = "Client")]
         [HttpPost]
-        public IActionResult CreateOrder([FromBody] OrderDto orderDto)
+        public IActionResult AddSaleOrder([FromBody] OrderDto saleOrderCreate)
         {
-            _orderService.Add(orderDto);
-            return Ok("La orden fue realizada exitosamente");
+            var userId = GetUserId();
+            if (userId == null)
+            {
+                return Forbid();
+            }
+
+            var client = _clientService.Get(saleOrderCreate.ClientId);
+            if (client is null)
+            {
+                return NotFound($"No se encontró al cliente con ID: {saleOrderCreate.ClientId}");
+            }
+
+       
+             _orderService.Add(saleOrderCreate);
+             return Ok($"Creada la venta para el cliente ID: {saleOrderCreate.ClientId}");
+            
         }
 
-        [HttpDelete("Delete/{id}")]
-        public IActionResult Delete(int id)
+        [HttpDelete("{id}")]
+        public IActionResult DeleteSaleOrder(int id)
         {
+            var userId = GetUserId();
+            if (userId == null)
+            {
+                return Forbid();
+            }
+            var saleOrder = _orderService.Get(id);
+            if (saleOrder is null)
+                return NotFound($"No se encontró la venta con ID: {id}");
+            
             _orderService.Delete(id);
-            return Ok("La orden fue eliminada");    
+            return Ok($"Venta con ID: {id} eliminada");           
         }
     }
 }
+

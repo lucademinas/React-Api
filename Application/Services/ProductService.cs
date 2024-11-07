@@ -104,5 +104,18 @@ namespace Application.Services
                 _productRepository.Update(product);
             }
         }
+
+        public void UpdateStock(int id, ProductUpdateDto dto)
+        {
+            var product = _productRepository.Get(id);
+            if (product != null)
+            {
+                product.Price = dto.Price;
+                product.Stock = dto.Stock;
+
+                _productRepository.Update(product);
+            }
+        }
+
     }
 }
