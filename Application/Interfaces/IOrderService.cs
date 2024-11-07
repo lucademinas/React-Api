@@ -15,5 +15,6 @@ namespace Application.Interfaces
         OrderResponseDTO? Get(int id);
         void Add(OrderDto createSaleOrder);
         void Delete(int id);
+        List<AdminOrderSummaryDTO> GetOrdersByAdmin(int adminId);
     }
 }
