@@ -18,5 +18,6 @@ namespace Domain.Entities
         public ICollection<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
         public DateTime OrderDate { get; set; } = DateTime.Today;
         public decimal Total {  get; set; }
+        public bool Finished { get; set; } = false;
     }
 }
