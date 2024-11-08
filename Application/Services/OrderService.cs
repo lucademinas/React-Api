@@ -134,6 +134,19 @@ namespace Application.Services
             return result;
         }
 
+        public void Update(int id)
+        {
+           var order = _repository.Get(id);
+            if(order is not null)
+            {
+                order.Finished = true;
+                _repository.Update(order);
+            }
+
+            
+
+        }
+
 
 
 

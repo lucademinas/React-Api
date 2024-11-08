@@ -120,6 +120,19 @@ namespace TPI_Ecommerce.Controllers
 
             return Ok(orders);
         }
+
+        [HttpPut("{id}")]
+        public IActionResult FinishOrder(int id)
+        {
+            var userId = GetUserId();
+            if (userId == null)
+            {
+                return Forbid();
+            }
+
+            _orderService.Update(id);
+            return Ok("La venta fue realizada");
+        }
     }
 }
 
