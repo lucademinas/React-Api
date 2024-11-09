@@ -83,13 +83,13 @@ namespace Application.Services
             var orderDetail = new OrderDetail()
             {
                 ProductId = dto.ProductId,
-                OrderId = dto.SaleOrderId,
+              //  OrderId = dto.SaleOrderId,
                 Quantity = dto.Amount,
             };
 
             _orderDetailRepository.Add(orderDetail);
 
-            var order = _orderRepository.Get(dto.SaleOrderId);
+            var order = _orderRepository.Get(dto/*.SaleOrderId*/);
             if (order is not null)
             {
                 order.Total += orderDetail.Quantity * product.Price;

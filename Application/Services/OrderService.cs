@@ -14,10 +14,12 @@ namespace Application.Services
     public class OrderService : IOrderService
     {
         private readonly IOrderRepository _repository;
+        private readonly IProductRepository _productRepository;
 
-        public OrderService(IOrderRepository repository)
+        public OrderService(IOrderRepository repository,IProductRepository productRepository)
         {
             _repository = repository;
+            _productRepository = productRepository;
         }
 
         public List<OrderResponseDTO> GetAllByClient(int clientId)
@@ -85,8 +87,24 @@ namespace Application.Services
             Order order = new Order()
             {
                 ClientId = createSaleOrder.ClientId,
-
+                
             };
+
+            List<OrderDetail> OrderDetails = createSaleOrder.OrderDetails.Select(x => new OrderDetail()
+            {
+                
+                Product = _productRepository.Get(x.ProductId),
+                ProductId = x.ProductId,
+                OrderId = order.Id,
+                Quantity = x.Amount,
+            }).ToList();
+
+            
+
+            decimal total = OrderDetails.Select(x =>x.Quantity* x.Product.Price).Sum();
+
+            order.Total = total;
+            order.OrderDetails = OrderDetails;
 
             _repository.Add(order);
 
@@ -147,7 +165,7 @@ namespace Application.Services
 
         }
 
-
+        
 
 
     }

@@ -11,5 +11,7 @@ namespace Application.Models
     {
         [Required]
         public int ClientId { get; set; }
+        [Required]
+        public List<OrderDetailCreateDto> OrderDetails { get; set; }
     }
 }

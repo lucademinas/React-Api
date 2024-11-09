@@ -133,6 +133,11 @@ namespace TPI_Ecommerce.Controllers
             _orderService.Update(id);
             return Ok("La venta fue realizada");
         }
+
+        
+
+
+
     }
 }
 

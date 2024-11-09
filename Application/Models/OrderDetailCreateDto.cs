@@ -9,8 +9,8 @@ namespace Application.Models
 {
     public class OrderDetailCreateDto
     {
-        [Required]
-        public int SaleOrderId { get; set; }
+       // [Required]
+       // public int SaleOrderId { get; set; }
         [Required]
         public int ProductId { get; set; }
         [Required]

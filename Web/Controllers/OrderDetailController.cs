@@ -97,10 +97,10 @@ namespace TPI_Ecommerce.Controllers
                 return Forbid();
             }
 
-            var actualSaleOrder = _orderService.Get(dto.SaleOrderId);
+            var actualSaleOrder = _orderService.Get(1/*dto.SaleOrderId*/);
             if (actualSaleOrder is null)
             {
-                return NotFound($"No se encontro la venta con el ID {dto.SaleOrderId}");
+                return NotFound($"No se encontro la venta con el ID {dto/*.SaleOrderId*/}");
             }
 
             var productSelected = _productService.Get(dto.ProductId);
