@@ -19,5 +19,6 @@ namespace Domain.Entities
         public DateTime OrderDate { get; set; } = DateTime.Today;
         public decimal Total {  get; set; }
         public bool Finished { get; set; } = false;
+        
     }
 }

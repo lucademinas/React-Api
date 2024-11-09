@@ -85,8 +85,17 @@ namespace Application.Services
             Order order = new Order()
             {
                 ClientId = createSaleOrder.ClientId,
-
+                
             };
+
+            List<OrderDetail> OrderDetails = createSaleOrder.OrderDetails.Select(x => new OrderDetail()
+            {
+                ProductId = x.ProductId,
+                OrderId = order.Id,
+                Quantity = x.Amount,
+            }).ToList();
+
+            order.OrderDetails = OrderDetails;
 
             _repository.Add(order);
 
@@ -147,7 +156,7 @@ namespace Application.Services
 
         }
 
-
+        
 
 
     }
