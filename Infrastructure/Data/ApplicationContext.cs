@@ -14,6 +14,7 @@ namespace Infrastructure.Data
         public DbSet<Product> Products { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderDetail> OrderDetails { get; set; }
+        public DbSet<Client> Clients { get; set; }
 
         public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options) 
         {
