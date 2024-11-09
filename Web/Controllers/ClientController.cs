@@ -1,5 +1,7 @@
 ﻿using Application.Interfaces;
 using Application.Models;
+using Application.Models.Responses;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,9 +19,21 @@ namespace Web.Controllers
         }
 
         [HttpGet]
+        [HttpGet("GetAllClients")]
         public IActionResult GetAllClients()
         {
-            return Ok(_clientService.Get());
+            var clients = _clientService.Get(); // Obtener todos los clientes
+
+            // Mapear a ClientListResponseDTO
+            var clientResponse = clients.Select(client => new ClientListResponseDTO
+            {
+                Id = client.Id,
+                Name = client.Name,
+                RegistrationDate = client.StartDate,
+                Email = client.Email 
+            }).ToList();
+
+            return Ok(clientResponse);
         }
 
         [HttpGet("{id}")]
@@ -59,5 +73,6 @@ namespace Web.Controllers
             return Ok("El cliente fue eliminado correctamente");
 
         }
+
     }
 }

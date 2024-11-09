@@ -62,5 +62,7 @@ namespace Application.Services
                 _repository.Delete(client);
             }
         }
+
+ 
     }
 }
