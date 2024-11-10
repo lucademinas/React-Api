@@ -31,6 +31,8 @@ namespace Application.Services
                 Description = s.Description,
                 Price = s.Price,
                 ImageUrl = s.ImageUrl,
+                Brand = s.Brand,
+                Stock = s.Stock,
                 Size = s.Size,
                 Admin = new AdminResponseDTO
                 {
@@ -56,6 +58,8 @@ namespace Application.Services
                 Description = s.Description,
                 Price = s.Price,
                 ImageUrl = s.ImageUrl,
+                Stock = s.Stock,
+                Brand = s.Brand,
                 Size = s.Size,
                 Admin = new AdminResponseDTO
                 {
